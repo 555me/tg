@@ -1,0 +1,53 @@
+name: run
+
+on:
+  repository_dispatch:
+    types: [tg_cf] 
+  workflow_dispatch:
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.14'
+        cache: 'pip' 
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f py.txt ]; then pip install -r py.txt; fi
+    - name: Run Script
+      env:
+        TGbot: ${{ secrets.TGbot }}
+        nup: ${{ secrets.chat1 }}
+        fix: ${{ secrets.chat2 }}
+        wup: ${{ secrets.chat3 }}
+        wwkey: ${{ secrets.wwkey }}
+        wwiv: ${{ secrets.wwiv }}
+        ntepy: ${{ secrets.nteup}}
+        fixpy: ${{ secrets.wwfix}}
+        wwpy: ${{ secrets.wwup}}
+      run: |
+        echo "$ntepy" > nteup.py
+        echo "$fixpy" > wwfix.py
+        echo "$wwpy" > wwup.py
+        python nteup.py
+        python wwfix.py
+        python wwup.py
+
+    - name: update db
+      run: |
+        git config --local user.email "cyyTg@github.com"
+        git config --local user.name "cyyTg"
+        if git diff-index --quiet HEAD --; then
+          echo "No changes"
+        else
+          git add fixver.db
+          git commit -m "update db"
+          git push
+        fi
