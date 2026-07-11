@@ -44,7 +44,7 @@ jobs:
       run: |
         git config --local user.email "cyyTg@github.com"
         git config --local user.name "cyyTg"
-        if git diff-index --quiet HEAD --; then
+        if git diff-index --quiet HEAD -- fixver.db; then
           echo "No changes"
         else
           git add fixver.db
