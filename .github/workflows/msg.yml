@@ -27,11 +27,10 @@ jobs:
         nup: ${{ secrets.chat1 }}
         fix: ${{ secrets.chat2 }}
         wup: ${{ secrets.chat3 }}
-        wwkey: ${{ secrets.wwkey }}
-        wwiv: ${{ secrets.wwiv }}
-        ntepy: ${{ secrets.nteup}}
-        fixpy: ${{ secrets.wwfix}}
-        wwpy: ${{ secrets.wwup}}
+        ntepy: ${{ secrets.nteup }}
+        fixpy: ${{ secrets.wwfix }}
+        wwpy: ${{ secrets.wwup }}
+        workflow: ${{ secrets.update }}
       run: |
         echo "$ntepy" > nteup.py
         echo "$fixpy" > wwfix.py
